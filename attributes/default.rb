@@ -29,7 +29,7 @@ default[:redis][:server][:port]     = "6379"
 
 default[:redis][:installation_preference] = "upstream"
 default[:redis][:version]           = "2.4.13"
-default[:redis][:release_url]       = "http://redis.googlecode.com/files/redis-2.4.13.tar.gz"
+default[:redis][:release_url]       = "http://redis.googlecode.com/files/redis-#{node[:redis][:version]}.tar.gz"
 
 #
 # Tunables
