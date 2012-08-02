@@ -58,7 +58,7 @@ logfile <%= @redis[:log_dir] %>/redis.log
 # dbid is a number between 0 and 'databases'-1
 databases 16
 
-<% if @redis[:slave] == "yes" %>
+<% if @master_server && @master_port %>
 ################################# REPLICATION #################################
 
 # Master-Slave replication. Use slaveof to make a Redis instance a copy of
@@ -66,7 +66,7 @@ databases 16
 # so for example it is possible to configure the slave to save the DB with a
 # different interval, or to listen to another port, and so on.
 
-slaveof <%= @redis[:master_server] %> <%= @redis[:master_port] %>
+slaveof <%= @master_server %> <%= @master_port %>
 <% end %>
 
 ################################## SECURITY ###################################

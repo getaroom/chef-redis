@@ -63,16 +63,24 @@ end
   end
 end
 
+master_server, master_port = nil, nil
+
+if node[:redis][:master_server_role]
+  master_nodes = search(:node, "(role:#{node[:redis][:master_server_role]} AND chef_environment:#{node.chef_environment}")
+  master_node = master_nodes.first unless master_nodes.empty?
+  master_server, master_port = master_node['fqdn'], master_node['redis']['server']['port']
+end
+
 template "#{node[:redis][:conf_dir]}/redis.conf" do
   source        "redis.conf.erb"
   owner         "root"
   group         "root"
   mode          "0644"
-  variables     :redis => node[:redis], :redis_server => node[:redis][:server]
+  variables     :redis => node[:redis], :redis_server => node[:redis][:server], :master_server => master_server, :master_port => master_port
+  notifies      :restart, resources(:service => "redis_server")
 end
 
 runit_service "redis_server" do
   run_state     node[:redis][:server][:run_state]
   options       node[:redis]
 end
-
