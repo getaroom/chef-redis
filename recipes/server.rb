@@ -39,6 +39,10 @@ else
   log "redis:vm_overcommit_memory=> 0"
 end
 
+group node[:redis][:group] do
+  gid node[:redis][:gid]
+end
+
 user node[:redis][:user] do
   uid node[:redis][:uid]
   gid node[:redis][:gid]

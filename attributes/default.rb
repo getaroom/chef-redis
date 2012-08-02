@@ -13,8 +13,9 @@ default[:redis][:pid_file]          = "/var/run/redis.pid"
 default[:redis][:db_basename]       = "dump.rdb"
 
 default[:redis][:user]              = 'redis'
-default[:users][:redis][:uid]      = 335
-default[:groups][:redis][:gid]      = 335
+default[:redis][:group]             = 'redis'
+default[:redis][:uid]               = 335
+default[:redis][:gid]               = 335
 
 #
 # Server
