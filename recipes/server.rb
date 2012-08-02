@@ -77,7 +77,7 @@ template "#{node[:redis][:conf_dir]}/redis.conf" do
   group         "root"
   mode          "0644"
   variables     :redis => node[:redis], :redis_server => node[:redis][:server], :master_server => master_server, :master_port => master_port
-  notifies      :restart, resources(:service => "redis_server")
+  notifies      :restart, "service[redis_server]"
 end
 
 runit_service "redis_server" do
