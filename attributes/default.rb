@@ -36,6 +36,8 @@ default[:redis][:release_url]       = "http://redis.googlecode.com/files/redis-#
 # Tunables
 #
 
+default[:sysctl][:vm][:overcommit_memory] = 1 if node[:memory][:total].to_i > 8169948
+
 default[:redis][:server][:timeout]  = "300000"
 default[:redis][:glueoutputbuf]     = "yes"
 

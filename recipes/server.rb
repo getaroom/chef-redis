@@ -20,6 +20,8 @@
 #
 
 include_recipe 'runit'
+include_recipe 'sysctl'
+
 case node[:redis][:installation_preference]
 when "upstream"
   include_recipe "redis::install_from_upstream"
@@ -28,15 +30,6 @@ when "upstream"
 #  include_recipe "redis::install_from_launchpad"
 else
   include_recipe "redis::install_from_package"
-end
-
-# if we have over 8GB of memory we enable overcommit.
-if node[:memory][:total].to_i > 8169948
-  sysctl "vm.overcommit_memory" do
-    variables 'vm.overcommit_memory' => 1
-  end
-else
-  log "redis:vm_overcommit_memory=> 0"
 end
 
 group node[:redis][:group] do
