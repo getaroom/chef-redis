@@ -21,47 +21,47 @@
 
 redis_server = node[:redis][:bin_location]
 
-directory "/mnt/redis/source" do
+directory "#{Chef::Config[:file_cache_path]}/redis/source" do
   action :create
   recursive true
   not_if { File.exists?(redis_server) }
 end
 
-directory "/mnt/redis/tarball" do
+directory "#{Chef::Config[:file_cache_path]}/redis/tarball" do
   action :create
   recursive true
   not_if { File.exists?(redis_server) }
 end
 
-remote_file "/mnt/redis/tarball/redis-#{node[:redis][:version]}" do
+remote_file "#{Chef::Config[:file_cache_path]}/redis/tarball/redis-#{node[:redis][:version]}" do
   source node[:redis][:release_url]
   not_if { File.exists?(redis_server) }
 end
 
 execute "untar redis v:#{node[:redis][:version]}" do
-  cwd "/mnt/redis/source"
-  command "tar zxf /mnt/redis/tarball/redis-#{node[:redis][:version]}"
+  cwd "#{Chef::Config[:file_cache_path]}/redis/source"
+  command "tar zxf #{Chef::Config[:file_cache_path]}/redis/tarball/redis-#{node[:redis][:version]}"
   not_if { File.exists?(redis_server) }
 end
 
 execute "make redis v:#{node[:redis][:version]}" do
-  cwd "/mnt/redis/source/redis-#{node[:redis][:version]}"
+  cwd "#{Chef::Config[:file_cache_path]}/redis/source/redis-#{node[:redis][:version]}"
   command "make all"
   not_if { File.exists?(redis_server) }
 end
 
 execute "install redis v:#{node[:redis][:version]}" do
-  cwd "/mnt/redis/source/redis-#{node[:redis][:version]}"
+  cwd "#{Chef::Config[:file_cache_path]}/redis/source/redis-#{node[:redis][:version]}"
   command "make install"
   not_if { File.exists?(redis_server) }
 end
 
-directory "/mnt/redis/tarball" do
+directory "#{Chef::Config[:file_cache_path]}/redis/tarball" do
   action :delete
   recursive true
 end
 
-directory "/mnt/redis/source" do
+directory "#{Chef::Config[:file_cache_path]}/redis/source" do
   action :delete
   recursive true
 end
