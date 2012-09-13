@@ -3,4 +3,4 @@
 cd <%= @options[:data_dir] %>
 
 exec 2>&1
-exec chpst -u <%= @options[:user] %> /usr/local/bin/redis-server <%= @options[:conf_dir] %>/redis.conf
+exec chpst -u <%= @options[:user] %> -o <%= @options[:server][:max_open_files] %> /usr/local/bin/redis-server <%= @options[:conf_dir] %>/redis.conf
