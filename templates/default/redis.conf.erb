@@ -108,6 +108,9 @@ slaveof <%= @master_server %> <%= @master_port %>
 # errors for write operations, and this may even lead to DB inconsistency.
 
 # maxmemory <bytes>
+<% if @redis[:maxmemory] -%>
+maxmemory <%= @redis[:maxmemory] %>
+<% end -%>
 
 ############################### ADVANCED CONFIG ###############################
 

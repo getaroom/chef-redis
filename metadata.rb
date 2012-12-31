@@ -108,3 +108,7 @@ attribute "groups/redis/gid",
   :display_name          => "",
   :description           => "",
   :default               => "335"
+
+attribute "redis/maxmemory",
+  :display_name          => "Redis max memory",
+  :description           => "Don't use more memory than the specified amount of bytes."
