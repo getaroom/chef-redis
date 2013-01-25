@@ -20,6 +20,7 @@ Supports platforms: debian and ubuntu
 
 Cookbook dependencies:
 * runit
+* sysctl
 
 ## Revisions
 
