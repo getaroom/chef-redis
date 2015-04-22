@@ -74,6 +74,5 @@ template "#{node[:redis][:conf_dir]}/redis.conf" do
 end
 
 runit_service "redis_server" do
-  run_state     node[:redis][:server][:run_state]
-  options       node[:redis]
+  options node[:redis]
 end
