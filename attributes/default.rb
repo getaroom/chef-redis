@@ -36,7 +36,13 @@ default[:redis][:release_url]       = "http://redis.googlecode.com/files/redis-#
 # Tunables
 #
 
-default[:sysctl][:vm][:overcommit_memory] = 1 if node[:memory][:total].to_i > 8169948
+case node["platform"]
+when "solaris2"
+        default[:sysctl][:vm][:overcommit_memory] = 1 if `prtconf -m` > 8
+else
+        default[:sysctl][:vm][:overcommit_memory] = 1 if node[:memory][:total].to_i > 8169948
+end
+
 default[:redis][:maxmemory] = nil
 
 default[:redis][:server][:timeout]  = "300000"
